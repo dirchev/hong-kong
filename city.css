@@ -44,6 +44,12 @@ h3 {
   text-shadow: 4px 4px 20px rgb(20, 20, 20);
 }
 
+/* AUDIO */
+.audio {
+  width: 100%;
+}
+
+
 /* CONTAINERS */
 
 .content {
