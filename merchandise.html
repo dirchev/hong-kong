@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hong Kong - Merchandise</title>
+    <link rel="stylesheet" href="./city.css">
+  </head>
+  <body>
+    <header id="header">
+      <div class="img-container">
+        <img src="img/heading.png" alt="Hong Kong heading image"/>
+      </div>
+      <h1>Hong Kong</h1>
+    </header>
+
+    <div class="clearfix">
+      <a href="index.html" class="back-button">Back</a>
+    </div>
+
+    <div class="subpage-container">
+    </div>
+
+    <div class="content">
+      <div class="tile">
+        <h1>Merchandise</h1>
+        <form id="merchForm" action="">
+          <div class="product-list clearfix">
+            <div class="product">
+              <img src="img/merch/merch1.jpg" alt="T-Shirt">
+              <h4>T-Shirt - 15&pound;</h4>
+              <div class="product-quantity">
+                <input name="merch1Quantity" type="number" placeholder="Enter Quantity (default 0)" min="0" max="4">
+                <span id="merch1QuantityError" class="merch-error"></span>
+              </div>
+            </div>
+            <div class="product">
+              <img src="img/merch/merch2.jpg" alt="Magnet">
+              <h4>Magnet - 5&pound;</h4>
+              <div class="product-quantity">
+                <input name="merch2Quantity" type="number" placeholder="Enter Quantity (default 0)" min="0" max="4">
+                <span id="merch2QuantityError" class="merch-error"></span>
+              </div>
+            </div>
+            <div class="product">
+              <img src="img/merch/merch3.jpg" alt="Cushion">
+              <h4>Cushion - 10&pound;</h4>
+              <div class="product-quantity">
+                <input name="merch3Quantity" type="number" placeholder="Enter Quantity (default 0)" min="0" max="4">
+                <span id="merch3QuantityError" class="merch-error"></span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-sm">
+            <button type="reset" class="merch-button-reset">Reset</button>
+            <button type="button" class="merch-button" onClick="updateOrderInfo()">Update Order</button>
+            <input class="merch-input" name="customerName" type="text" placeholder="Enter Your Name">
+            <span id="customerNameError" class="merch-error pull-right mr-sm"></span>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="tile">
+        <h3>Order Information</h3>
+        <h4>Customer</h4>
+        <div><b>Name:</b> <span id="customerName">Not Set</span></div>
+        <hr>
+        <h4>Products</h4>
+        <div>T-Shirt x <span id="merch1Quantity">0</span> - <span id="merch1Total">0</span>&pound;</div>
+        <div>Magnet x <span id="merch2Quantity">0</span> - <span id="merch2Total">0</span>&pound;</div>
+        <div>Cushion x <span id="merch3Quantity">0</span> - <span id="merch3Total">0</span>&pound;</div>
+        <hr style="margin-top: 4px; margin-bottom: 4px"/>
+        <div><b>Number of items:</b> <span id="orderTotalQuantity">0</span></div>
+        <div><b>Total Cost:</b> <span id="orderTotalCost">0</span>&pound;</div>
+      </div>
+    </div>
+
+    <script>
+      function updateOrderInfo () {
+        var prices = [15, 5, 10]
+        var quantities = []
+        quantities.push(parseInt(merchForm.merch1Quantity.value) || 0)
+        quantities.push(parseInt(merchForm.merch2Quantity.value) || 0)
+        quantities.push(parseInt(merchForm.merch3Quantity.value) || 0)
+
+        // setting error message
+        quantities.forEach(function (quantity, index) {
+          if (isNaN(quantity)) {
+            document.getElementById('merch' + (index + 1) + 'QuantityError').innerHTML = 'Invalid Quantity'
+            // reset quantity input
+            merchForm['merch' + (index + 1) + 'Quantity'].value = null
+
+          } else if (quantity < 0 || quantity > 4) {
+            document.getElementById('merch' + (index + 1) + 'QuantityError').innerHTML = 'Quantity must be between 0 and 4'
+            // reset quantity input
+            merchForm['merch' + (index + 1) + 'Quantity'].value = null
+            quantities[index] = 0
+          } else {
+            document.getElementById('merch' + (index + 1) + 'QuantityError').innerHTML = ''
+          }
+        })
+
+        // customer name
+        var customerName = merchForm.customerName.value
+        if (customerName.length <= 4) {
+          document.getElementById('customerNameError').innerHTML = 'Invalid Name'
+          customerName = 'Not Set'
+        }
+
+        document.getElementById('customerName').innerHTML = customerName
+
+        //updating order information
+        quantities.forEach(function (quantity, index) {
+          document.getElementById('merch' + (index + 1) + 'Quantity').innerHTML = quantity
+          document.getElementById('merch' + (index + 1) + 'Total').innerHTML = quantity * prices[index]
+        })
+
+        // computing total cost
+        var totalCost = 0
+        quantities.forEach(function (quantity, index) {
+          totalCost += quantity * prices[index]
+        })
+        document.getElementById('orderTotalCost').innerHTML = totalCost
+
+        // computing total quantity
+        var totalQuantity = 0
+        quantities.forEach(function (quantity, index) {
+          totalQuantity += quantity
+        })
+        document.getElementById('orderTotalQuantity').innerHTML = totalQuantity
+
+      }
+    </script>
+  </body>
+</html>
