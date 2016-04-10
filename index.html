@@ -4,8 +4,22 @@
     <meta charset="utf-8">
     <title>Hong Kong</title>
     <link rel="stylesheet" href="./city.css">
+
+    <script>
+      var merchEffect = function () {
+        var i = 0
+        setInterval(function () {
+          if (i % 2 === 0) {
+            document.getElementById('merchandiseTile').style.borderColor = 'red'
+          } else {
+            document.getElementById('merchandiseTile').style.borderColor = '#2E76B1'
+          }
+          i++
+        }, 500)
+      }
+    </script>
   </head>
-  <body>
+  <body onload="merchEffect()">
     <header id="header">
       <div class="img-container">
         <img src="img/heading.png" alt="Hong Kong heading image"/>
@@ -79,7 +93,16 @@
     </div>
 
     <div class="side">
-      <div class="tile tile-gray">
+      <div id="merchandiseTile" class="tile">
+        <h3>Merchandise</h3>
+        <p>
+          Buy amazing toys and souvenirs from our brand new merchandise section!
+        </p>
+        <a href="/merchandise.html" class="tile-btn pull-right">
+          Go To Merchadise
+        </a>
+      </div>
+      <div class="tile">
         <h3>Hong Kong's Landmarks</h3>
         <ul id="landmarks">
           <li>
